@@ -10,35 +10,9 @@ const db = require("../db/connection");
 // })
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded())
+app.use("/restaurants", require("../routes/restaurants"));
 
-app.get("/restaurants", async (req, res) => {
-  const restaurants = await Restaurant.findAll();
-  res.json(restaurants);
-});
 
-app.get("/restaurants/:id", async (req, res) => {
-  const restaurant = await Restaurant.findByPk(req.params.id);
-  res.json(restaurant);
-});
-
-app.post("/restaurants/", async (req, res) => {
-  const newRestaurant = await Restaurant.create(req.body);
-  res.json(newRestaurant);
-});
-
-app.put("/restaurants/:id", async (req, res) => {
-  const newRestaurant = await Restaurant.update(req.body, {
-    where: { id: req.params.id },
-  });
-  res.json(newRestaurant);
-});
-
-app.delete("/restaurants/:id", async (req, res) => {
-  const deletedRestaurant = await Restaurant.destroy(req.body, {
-    where: { id: req.params.id },
-  });
-  res.json(deletedRestaurant);
-});
 
 module.exports = app;
